@@ -6,5 +6,7 @@ setup(
     install_requires=[
         "sh >= 1.14.1",
     ],
-    scripts=["monitor_brightness.py"]
+    entry_points={
+        "console_scripts": ["monitor-brightness-cron=monitor_brightness:__main__"]
+    },
 )
