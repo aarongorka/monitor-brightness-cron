@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name="monitor-brightness-cron",
-    version="0.0.1",
+    version="0.0.2",
     install_requires=[
         "sh >= 1.14.1",
     ],
