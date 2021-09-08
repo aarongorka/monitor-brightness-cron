@@ -34,7 +34,7 @@ def get_hour_minute() -> float:
     return hour_minute
 
 
-if __name__ == "__main__":
+def set_monitor_brightness() -> None:
     hour_minute = get_hour_minute()
     brightness_value = get_brightness_value(
         hour_minute=hour_minute,
@@ -42,4 +42,15 @@ if __name__ == "__main__":
     print(f"The hour is {hour_minute:.2f}, brightness value is {brightness_value}.")
 
     # set the monitor brightness using `ddcutil`
-    sh.sudo.ddcutil(f"setvcp", "10", new_value)
+    try:
+        sh.sudo.ddcutil(f"setvcp", "10", brightness_value)
+    except sh.ErrorReturnCode_1 as e:
+        if "Display not found" in e.stderr.decode('utf-8'):
+            print(f"Monitor not found, it may be turned off. Exiting.")
+            return
+        else:
+            raise e
+
+
+if __name__ == "__main__":
+    set_monitor_brightness()
